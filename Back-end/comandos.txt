@@ -1,0 +1,28 @@
+== TODOS OS COMANDOS DEVEM SER EXECUTADOS DENTRO DA PASTA 'NODE_SEQUELIZE' ==
+
+-> npm install
+Usado para instalar as dependências do projeto.
+
+-> npx sequelize db:migrate
+Usado para aplicar migrações ao banco de dados utilizando o Sequelize CLI (criação de tabelas).
+
+-> npm run dev
+Usado para rodar o servidor em ambiente de desenvolvimento.
+
+
+== PARA DASHBOARD fazer essas modificações ==
+
+-> Arquivo 'node_sequelize/src/data-analisys/start_server.py': 
+   * Colar caminho do arquivo 'dashboard.py'
+
+-> Arquivo 'node_sequelize/src/data-analisys/dashboard.py': 
+   * Colar caminho do arquivo 'company_id.txt', que está na pasta 'node_sequelize/src/controllers'
+   * Alterar credenciais do seu banco de dados
+
+-> Arquivo 'node_sequelize/src/controllers/AnalyticsController.js': Colar caminho da pasta 'node_sequelize/src/data-analisys'
+
+
+== Lembretes importantes ==
+
+1- Certifique-se de criar o banco de dados chamado "fastmart" ou, caso deseje um nome diferente, altere no arquivo `node_sequelize/src/config/database.js`.
+2- Não se esqueça de ajustar a senha do banco de dados conforme suas configurações, também no arquivo no arquivo `node_sequelize/src/config/database.js`.

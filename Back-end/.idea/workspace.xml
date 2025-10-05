@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6a5a76ac-1a5e-4b20-88ca-6e9f502bf7aa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/controllers/CompanyController.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/controllers/CompanyController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/controllers/FinanceController.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/controllers/FinanceController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/controllers/ProductController.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/controllers/ProductController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825193540-CreateCompanies.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825193540-CreateCompanies.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825194014-CreateUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825194014-CreateUsers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825195446-deletedProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/database/migrations/20240825195446-deletedProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/models/DeletedProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/models/DeletedProduct.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_sequelize/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_sequelize/src/routes.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="joaojmgl" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2jmmhJC2geVXYn7FmFyQntEKnza" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;maryjuanna&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/jmgl/Downloads/27-08_novo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/jmgl/Documentos/WebStorm-2024.1.5/WebStorm-241.18034.50/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/node_sequelize/src/database/migrations" />
+      <recent name="$PROJECT_DIR$/node_sequelize/src/models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/node_sequelize/src/controllers" />
+      <recent name="$PROJECT_DIR$/node_sequelize/src/models" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6a5a76ac-1a5e-4b20-88ca-6e9f502bf7aa" name="Changes" comment="" />
+      <created>1722000744322</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722000744322</updated>
+      <workItem from="1722000745411" duration="5652000" />
+      <workItem from="1722341042697" duration="35000" />
+      <workItem from="1722479421327" duration="146000" />
+      <workItem from="1722886020016" duration="3177000" />
+      <workItem from="1723231200625" duration="4877000" />
+      <workItem from="1723556731539" duration="5280000" />
+      <workItem from="1723652710438" duration="765000" />
+      <workItem from="1723746308973" duration="13812000" />
+      <workItem from="1724207015845" duration="510000" />
+      <workItem from="1724343692441" duration="6909000" />
+      <workItem from="1724353263259" duration="885000" />
+      <workItem from="1724537601817" duration="4824000" />
+      <workItem from="1724614307764" duration="7704000" />
+      <workItem from="1724622049819" duration="1280000" />
+      <workItem from="1724623359431" duration="1932000" />
+      <workItem from="1724673342991" duration="11693000" />
+      <workItem from="1724800036610" duration="1494000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
