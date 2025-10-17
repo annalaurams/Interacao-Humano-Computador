@@ -25,13 +25,11 @@ export const Header: React.FC<HeaderProps> = ({
     null
   );
   const [profession, setProfession] = useState<string>("");
-  const [code, setCode] = useState<number | null>(null);
   const navigate = useNavigate();
   const authUser = useAuthUser();
 
   useEffect(() => {
     const storedCode = Number(localStorage.getItem("code"));
-    setCode(storedCode);
     const userProfession = getProfession(storedCode);
     setProfession(userProfession);
   }, []);

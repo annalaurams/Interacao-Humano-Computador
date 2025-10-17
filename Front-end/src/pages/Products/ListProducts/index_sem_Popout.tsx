@@ -10,7 +10,7 @@ import {
 import { Header } from "../../../components/Header";
 import SearchBar from "../../../components/SearchBar";
 import { format, parseISO } from "date-fns";
-import usePopOutExperiment from "../../../hooks/usePopOutExperiment";
+import usePrecomputedExperiment from "../../../hooks/usePrecomputedExperiment";
 
 export interface TypeProduct {
   id: number;
@@ -45,13 +45,13 @@ const ProductsList: React.FC = () => {
   const navigate = useNavigate();
 
   const {
-    startSearchTask,
+    startSession,
     registerClick,
     exportToCSV,
     getStats,
-    currentTask,
-    isActive: experimentActive,
-  } = usePopOutExperiment({ autoStart: true, persist: true, persistKey: "fastmart_experiment_v1" });
+  isActive: experimentActive,
+    sessionData
+  } = usePrecomputedExperiment({ autoStart: true, persist: true, persistKey: "fastmart_experiment_v1" } as any);
 
   useEffect(() => {
     if (experimentActive) {
@@ -69,12 +69,12 @@ const ProductsList: React.FC = () => {
         const data = await fetchProducts();
         setProducts(data);
 
-        if (experimentActive && data.length > 0) {
+        if (data.length > 0) {
+          // precompute targets before any highlight: choose all low-stock ids
           const low = data.filter((p) => isLowStock(p.quantity_per_unit));
-          if (low.length > 0) {
-            const targetId = `product-${low[0].id}`;
-            startSearchTask(targetId, data.length);
-          }
+          const targets = low.map((p) => `product-${p.id}`);
+          // start session with precomputed targets (no UI highlight)
+          if (targets.length > 0) startSession(targets, data.length);
         }
       } catch (e) {
         setError("Erro ao buscar dados da API");
@@ -83,7 +83,7 @@ const ProductsList: React.FC = () => {
       }
     };
     load();
-  }, [experimentActive, startSearchTask]);
+  }, [experimentActive, startSession]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -176,7 +176,7 @@ const ProductsList: React.FC = () => {
             {experimentActive && (
               <div className="mt-2 text-sm text-gray-600">
                  <strong>Experimento Pop-out Pré-atencional</strong> — Clique nos
-                produtos com estoque baixo (destacados em vermelho)
+                produtos com estoque baixo
                 <div className="text-xs text-blue-600 mt-1">
                   Debug: {getStats().totalClicks} cliques •{" "}
                   {getStats().totalCorrect} acertos • Tentativa #
@@ -252,9 +252,9 @@ const ProductsList: React.FC = () => {
                 <div className="text-blue-600">Precisão</div>
               </div>
             </div>
-            {currentTask && (
+            {experimentActive && sessionData.targets.length > 0 && (
               <div className="mt-2 text-center text-blue-700 font-medium">
-                Encontre o produto com estoque baixo!
+                Encontre o produto com estoque baixo! (alvos pré-computados: {sessionData.targets.length})
               </div>
             )}
           </div>
@@ -299,8 +299,9 @@ const ProductsList: React.FC = () => {
                       key={product.id}
                       id={`product-${product.id}`}
                       className={`${
-                        lowStock ? "bg-red-50 hover:bg-red-100" : "hover:bg-gray-50"
-                      } transition-colors duration-200 cursor-pointer`}
+                            // When the experiment is active and precomputed, suppress visual pop-out highlights
+                            lowStock && !experimentActive ? "bg-red-50 hover:bg-red-100" : "hover:bg-gray-50"
+                          } transition-colors duration-200 cursor-pointer`}
                       onClick={(e) => {
                         e.preventDefault();
 
@@ -317,21 +318,7 @@ const ProductsList: React.FC = () => {
                       );
 
                         // 1) registra o clique (sempre)
-            
-                        // 2) se acertou, iniciar próxima tarefa (se houver)
-                        if (isCorrect) {
-                          setTimeout(() => {
-                            const remainingLow = filteredProducts.filter(
-                              (p) =>
-                                isLowStock(p.quantity_per_unit) &&
-                                p.id !== product.id
-                            );
-                            if (remainingLow.length > 0) {
-                              const nextTargetId = `product-${remainingLow[0].id}`;
-                              startSearchTask(nextTargetId, filteredProducts.length);
-                            }
-                          }, 250);
-                        }
+                        // progression through precomputed targets is handled by the experiment hook via registerClick
 
                         // 3) NÃO navegar enquanto o experimento está ativo
                         if (!experimentActive) {
@@ -343,18 +330,19 @@ const ProductsList: React.FC = () => {
                     >
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          // avoid bold red text when experiment is active (we only want metrics)
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         {product.name}
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         {product.quantity_per_unit}
-                        {lowStock && (
+                        {lowStock && !experimentActive && (
                           <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                             Baixo
                           </span>
@@ -362,28 +350,28 @@ const ProductsList: React.FC = () => {
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         {product.unit_of_measure}
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         R$ {product.purchase_price}
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         R$ {product.sale_price}
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm ${
-                          lowStock ? "font-bold text-red-700" : "text-gray-900"
+                          lowStock && !experimentActive ? "font-bold text-red-700" : "text-gray-900"
                         }`}
                       >
                         {product.supplier}

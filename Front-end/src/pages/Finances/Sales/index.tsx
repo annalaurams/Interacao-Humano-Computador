@@ -21,7 +21,6 @@ export const ValidationProdcutSchema = yup.object().shape({
 export const Sales: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<TypeProduct[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<
     { product: TypeProduct; quantity: number }[]
   >([]);
@@ -32,7 +31,7 @@ export const Sales: React.FC = () => {
         const fetchedProducts = await fetchProducts();
         setProducts(fetchedProducts);
       } catch (error) {
-        setError("Erro ao buscar dados da API");
+        console.error("Erro ao buscar dados da API", error);
       }
     };
 

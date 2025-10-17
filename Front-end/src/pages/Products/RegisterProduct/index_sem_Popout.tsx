@@ -10,7 +10,7 @@ import { Header } from "../../../components/Header";
 import { registerProduct } from "../../../services/ServicesProduct";
 import NumericInput from "../../../components/NumericInput";
 import { useNavigate } from "react-router-dom";
-import usePopOutExperiment from "../../../hooks/usePopOutExperiment";
+import usePrecomputedExperiment from "../../../hooks/usePrecomputedExperiment";
 
 export const ValidationProdcutSchema = yup.object().shape({
   product: yup.object().shape({
@@ -37,17 +37,17 @@ export const RegisterProduct: React.FC = () => {
   // === POP-OUT EXPERIMENTO ===
   // - alvo: campo "Quantidade por unidade" 
   const {
-    startSearchTask,
+    startSession,
     registerClick,
     exportToCSV,
     getStats,
-    currentTask,
-    isActive: experimentActive,
-  } = usePopOutExperiment({
+  isActive: experimentActive,
+  sessionData,
+  } = usePrecomputedExperiment({
     autoStart: true,
     persist: true,
     persistKey: "fastmart_experiment_register_v1",
-  });
+  } as any);
 
   const FIELD_IDS = useMemo(
     () => ({
@@ -71,9 +71,10 @@ export const RegisterProduct: React.FC = () => {
 
   useEffect(() => {
     if (experimentActive) {
-      startSearchTask(FIELD_IDS.quantity, itemCount);
+      // precompute the single target (quantity field) before any UI highlight
+      startSession([FIELD_IDS.quantity], itemCount);
     }
-  }, [experimentActive, startSearchTask]);
+  }, [experimentActive, startSession]);
 
   useEffect(() => {
     if (experimentActive) {
@@ -165,7 +166,9 @@ export const RegisterProduct: React.FC = () => {
     "ring-2 ring-red-400 ring-offset-2 rounded-md transition-shadow";
 
   const isTarget = (fieldId: string) =>
-    currentTask?.targetId ? currentTask.targetId === fieldId : fieldId === FIELD_IDS.quantity;
+    // When using precomputed sessions, the target is the quantity field.
+    // Keep compatibility: if sessionData has targets, check them; otherwise default to quantity field.
+    (sessionData?.targets && sessionData.targets.includes(fieldId)) || fieldId === FIELD_IDS.quantity;
 
   return (
     <div>
@@ -181,7 +184,7 @@ export const RegisterProduct: React.FC = () => {
                 key={forceUpdate}
               >
                 <div className="font-semibold mb-1">🔬 Experimento Pop-out ativo</div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-2">zz
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
                   <div className="text-center">
                     <div className="font-bold">{getStats().completedTasks}</div>
                     <div>Tentativas</div>
@@ -231,7 +234,7 @@ export const RegisterProduct: React.FC = () => {
             <div>
               <div
                 id={FIELD_IDS.name}
-                className={isTarget(FIELD_IDS.name) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.name) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) => handleFieldClick(e, FIELD_IDS.name, "Nome")}
               >
                 <TextInput
@@ -256,7 +259,7 @@ export const RegisterProduct: React.FC = () => {
 
               <div
                 id={FIELD_IDS.date}
-                className={isTarget(FIELD_IDS.date) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.date) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) => handleFieldClick(e, FIELD_IDS.date, "Data da compra")}
               >
                 <DateInput
@@ -278,7 +281,7 @@ export const RegisterProduct: React.FC = () => {
 
               <div
                 id={FIELD_IDS.unit}
-                className={isTarget(FIELD_IDS.unit) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.unit) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) => handleFieldClick(e, FIELD_IDS.unit, "Unidade de Medida")}
               >
                 <SelectInput
@@ -305,7 +308,7 @@ export const RegisterProduct: React.FC = () => {
               <div
                 id={FIELD_IDS.purchase_price}
                 className={
-                  isTarget(FIELD_IDS.purchase_price) ? targetHighlightClass : ""
+                  isTarget(FIELD_IDS.purchase_price) && !experimentActive ? targetHighlightClass : ""
                 }
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.purchase_price, "Preço de Compra")
@@ -336,7 +339,7 @@ export const RegisterProduct: React.FC = () => {
 
               <div
                 id={FIELD_IDS.quantity}
-                className={isTarget(FIELD_IDS.quantity) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.quantity) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.quantity, "Quantidade por unidade")
                 }
@@ -366,7 +369,7 @@ export const RegisterProduct: React.FC = () => {
             <div>
               <div
                 id={FIELD_IDS.sale_price}
-                className={isTarget(FIELD_IDS.sale_price) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.sale_price) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.sale_price, "Preço de Venda")
                 }
@@ -397,7 +400,7 @@ export const RegisterProduct: React.FC = () => {
               <div
                 id={FIELD_IDS.expiry_date}
                 className={
-                  isTarget(FIELD_IDS.expiry_date) ? targetHighlightClass : ""
+                  isTarget(FIELD_IDS.expiry_date) && !experimentActive ? targetHighlightClass : ""
                 }
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.expiry_date, "Data de validade")
@@ -424,7 +427,7 @@ export const RegisterProduct: React.FC = () => {
 
               <div
                 id={FIELD_IDS.supplier}
-                className={isTarget(FIELD_IDS.supplier) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.supplier) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.supplier, "Fornecedor")
                 }
@@ -453,7 +456,7 @@ export const RegisterProduct: React.FC = () => {
 
               <div
                 id={FIELD_IDS.code}
-                className={isTarget(FIELD_IDS.code) ? targetHighlightClass : ""}
+                className={isTarget(FIELD_IDS.code) && !experimentActive ? targetHighlightClass : ""}
                 onClick={(e) => handleFieldClick(e, FIELD_IDS.code, "Código")}
               >
                 <NumberInput
@@ -479,7 +482,7 @@ export const RegisterProduct: React.FC = () => {
               <div
                 id={FIELD_IDS.payment_method}
                 className={
-                  isTarget(FIELD_IDS.payment_method) ? targetHighlightClass : ""
+                  isTarget(FIELD_IDS.payment_method) && !experimentActive ? targetHighlightClass : ""
                 }
                 onClick={(e) =>
                   handleFieldClick(e, FIELD_IDS.payment_method, "Método de Pagamento")

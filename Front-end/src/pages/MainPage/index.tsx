@@ -13,12 +13,10 @@ export const getProfession = (storedCode: number | null) => {
 };
 
 const MainPage: React.FC = () => {
-  const [code, setCode] = useState<number | null>(null);
   const [profession, setProfession] = useState<string>("");
 
   useEffect(() => {
     const storedCode = Number(localStorage.getItem("code"));
-    setCode(storedCode);
     const userProfession = getProfession(storedCode);
     setProfession(userProfession);
   }, []);
