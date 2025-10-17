@@ -1,122 +1,44 @@
-# 📘 Fast Mart – IHC
+# Interação Humano-Computador
+
+### ⚛️ Front-end —
+
+Este projeto contém o **Front-end** do experimento *“Efeitos Pop-out e Pré-atencionais Aplicados à Usabilidade de Sistemas de Gerenciamento de Supermercados”*.  
+A interface foi desenvolvida em **React** com **Vite**, permitindo a execução dos experimentos diretamente no navegador.
+
+
+#### Compilação e Execução
+
+| **Etapa**           | **Comando**      | **Descrição**                                      |
+|---------------------|------------------|----------------------------------------------------|
+| **Entrar na pasta** | `cd Front-end`   | Acessa o diretório do front-end.                   |
+| **Rodar o projeto** | `npm run dev`    | Inicia o servidor de desenvolvimento do Vite.      |
+
+Após executar o comando, o front-end estará disponível em `http://localhost:5173`
+
 
 ---
 
-## 🛒 Vendas  
+### ⚛️ Back-end —
 
-### Cadastrar Venda  
-**POST** `http://localhost:3333/sales`  
+Este template fornece uma configuração mínima para rodar um back-end com **Node.js**, **Express**, **Sequelize** e **MariaDB**, com suporte para **Autenticação JWT** e segurança aprimorada com **bcrypt**. 
 
-```json
-{
-  "date": "2024-08-01",
-  "description": "Venda de vários produtos",
-  "payment_method": "Pix",
-  "products": [
-    {
-      "code": 12.0,
-      "quantity": 1
-    }
-  ]
-}
-```
+## Configuração do Banco de Dados
 
----
+No arquivo `node_sequelize/src/config/database.js`, configure os seguintes parâmetros:
 
-## 📦 Produtos  
+- Nome do Banco de Dados
+- Senha
+- Nome de Usuário
 
-### Criar Produto  
-**POST** `http://localhost:3333/products`  
+#### Compilação e Execução
 
-```json
-{
-  "name": "Leite",
-  "unit_of_measure": "litro",
-  "purchase_price": 3.0,
-  "quantity_per_unit": 2.0,
-  "sale_price": 8,
-  "expiry_date": "2025-05-20T00:00:00.000Z",
-  "supplier": "Danone",
-  "code": 1
-}
-```
+| **Etapa**             | **Comando**               | **Descrição**                                                                                           |
+|-----------------------|---------------------------|-------------------------------------------------------------------------------------------------------|
+| **Aplicar Migrações** | `npx sequelize db:migrate` | Aplica todas as migrações pendentes ao banco de dados.                                               |
+| **Rodar o Servidor**  | `npm run dev`             | Executa o servidor em modo de desenvolvimento.                                                        |
 
-### Procurar Produto Específico  
-**POST** `http://localhost:3333/products/search`  
+### Observação
 
-```json
-{
-  "name": "Milho"
-}
-```
+Certifique-se de executar esses comandos dentro da pasta `node_sequelize`.
 
----
 
-## 💰 Finanças  
-
-### Cadastrar Produto (Geral e Específico)  
-**POST** `http://localhost:3333/finances`  
-
-```json
-{
-  "date": "2024-08-01",
-  "description": "Venda de produto X",
-  "value": 100.0,
-  "quantity": 10,
-  "expiry_date": "2024-08-24",
-  "payment_method": "Dinheiro",
-  "product": {
-    "name": "Iorgute",
-    "unit_of_measure": "litro",
-    "purchase_price": 3.0,
-    "quantity_per_unit": 5.0,
-    "sale_price": 8,
-    "expiry_date": "2025-05-20T00:00:00.000Z",
-    "supplier": "Danone",
-    "code": 2
-  }
-}
-```
-
----
-
-## 🏢 Empresas  
-
-### Criar Empresa  
-**POST** `http://localhost:3333/companys`  
-
-```json
-{
-  "comp_name": "ABC",
-  "comp_cnpj": "1456",
-  "comp_employees": "101",
-  "address": {
-    "street": "Rua Guape",
-    "number": "10",
-    "district": "Bela VIsta",
-    "city": "Divinopolis",
-    "state": "MG"
-  }
-}
-```
-
----
-
-## 👤 Usuários  
-
-### Criar Usuário  
-**POST** `http://localhost:3333/users/`  
-
-```json
-{
-  "name": "Anna",
-  "password": "54321",
-  "email": "anna@gmail.com",
-  "code": 3,
-  "birthday_date": "2003-02-27",
-  "cpf": "876543210",
-  "phone": "37987654321",
-  "education": "triste",
-  "company_id": 1
-}
-```
